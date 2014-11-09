@@ -5,7 +5,7 @@
 FS="ext4"
 DEVICE=$1
 BOOT_PART="/dev/disk/by-partlabel/boot"
-SWAP_PART="/dev/disk/by/partlabel/swap"
+SWAP_PART="/dev/disk/by-partlabel/swap"
 LVM_PART="/dev/disk/by-partlabel/gentdsk"
 CRYPT_NAME="crypt"
 
@@ -49,7 +49,3 @@ mount $BOOT_PART /mnt/gentoo/boot
 mkdir /mnt/gentoo/home
 mount $LVM_HOME /mnt/gentoo/home
 
-cp -L /etc/resolv.conf /mnt/gentoo/etc/
-mount -t proc proc /mnt/gentoo/proc
-mount --rbind /sys /mnt/gentoo/sys
-mount --rbind /dev /mnt/gentoo/dev
