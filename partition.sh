@@ -7,6 +7,7 @@ DEVICE=$1
 BOOT_PART="/dev/disk/by-partlabel/boot"
 SWAP_PART="/dev/disk/by/partlabel/swap"
 LVM_PART="/dev/disk/by-partlabel/gentdsk"
+CRYPT_NAME="crypt"
 
 sgdisk $DEVICE --attributes=1:set:2 # GPT
 sgdisk -o \
@@ -24,13 +25,12 @@ cryptsetup \
     --hash sha512 \
     --iter-time 5000 \
     --verify-passphrase \
-    luksFormat $LUKS_PART
+    luksFormat $LVM_PART
 
-cryptsetup \
-    luksOpen $LUKS_PART crypt
+cryptsetup luksOpen $LVM_PART $CRYPT_NAME
 
-pvcreate $LVM_PART
-vgcreate gentoo $LVM_PART
+pvcreate /dev/mapper/$CRYPT_NAME
+vgcreate gentoo /dev/mapper/$CRYPT_NAME
 lvcreate --name root --extents 20%FREE gentoo
 lvcreate --name home --extents 100%FREE gentoo
 
