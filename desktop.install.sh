@@ -88,6 +88,7 @@ if [[ $REPLY =~ [Yy]$ ]]; then
         dev-vcs/git \
         sys-process/htop \
         app-misc/tmux \
+        app-misc/screen \
         www-client/links \
         net-fs/nfs-utils \
         net-misc/socat \
