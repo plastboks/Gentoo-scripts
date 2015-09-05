@@ -148,6 +148,6 @@ if [[ $REPLY =~ [Yy]$ ]]; then
         app-crypt/ccid"
 fi
 
-print "\n"
+printf "\n"
 sudo emerge $PACKAGES
 exit
