@@ -13,7 +13,7 @@ PACKAGES=""
 # X related #
 #############
 printf "\n"
-read -p "Install xorg [y/N]" -n 1 -r
+read -p "Install xorg [y/N] " -n 1 -r
 if [[ $REPLY =~ [Yy]$ ]]; then
     PACKAGES="$PACKAGES \
         x11-base/xorg-server \
@@ -21,6 +21,8 @@ if [[ $REPLY =~ [Yy]$ ]]; then
         xrdb \
         xautolock \
         xdg-user-dirs \
+        x11-apps/xset \
+        x11-apps/setxkbmap \
         arandr \
         xrandr"
 fi
@@ -29,7 +31,7 @@ fi
 # i3wm #
 ########
 printf "\n"
-read -p "Install i3 and friends [y/N]" -n 1 -r
+read -p "Install i3 and friends [y/N] " -n 1 -r
 if [[ $REPLY =~ [Yy]$ ]]; then
     PACKAGES="$PACKAGES \
         x11-wm/i3 \
@@ -47,16 +49,27 @@ if [[ $REPLY =~ [Yy]$ ]]; then
         x11-misc/dmenu"
 fi
 
+##########
+# Editor #
+##########
+printf "\n"
+read -p "Install editors [y/N]  " -n 1 -r
+if [[ $REPLY =~ [Yy]$ ]]; then
+    PACKAGES="$PACKAGES \
+        app-editors/vim"
+fi
+
 #########
 # Fonts #
 #########
 printf "\n"
-read -p "Install free fonts [y/N]" -n 1 -r
+read -p "Install free fonts [y/N] " -n 1 -r
 if [[ $REPLY =~ [Yy]$ ]]; then
     PACKAGES="$PACKAGES \
         media-fonts/freefonts \
         media-fonts/dejavu \
         media-fonts/libertine \
+        media-fonts/terminus-font \
         x11-themes/faenza-icon-theme \
         media-fonts/liberation-fonts"
 fi
@@ -65,11 +78,10 @@ fi
 # Misc network tools #
 ######################
 printf "\n" #
-read -p "Install ssh, encryption and sync utils [y/N]" -n 1 -r
+read -p "Install ssh, encryption and sync utils [y/N] " -n 1 -r
 if [[ $REPLY =~ [Yy]$ ]]; then
     PACKAGES="$PACKAGES \
         sys-fs/sshfs-fuse \
-        net-misc/unison \
         net-misc/rsync \
         sys-fs/encfs \
         dev-libs/openssl \
@@ -80,7 +92,7 @@ fi
 # VARIOUS #
 ###########
 printf "\n" # various
-read -p "Install other various cli tools [y/N]" -n 1 -r
+read -p "Install other various cli tools [y/N] " -n 1 -r
 if [[ $REPLY =~ [Yy]$ ]]; then
     PACKAGES="$PACKAGES \
         media-video/cclive \
@@ -103,7 +115,7 @@ fi
 # Smart card utils #
 ####################
 printf "\n" #
-read -p "Install Smart card utils [y/N]" -n 1 -r
+read -p "Install Smart card utils [y/N] " -n 1 -r
 if [[ $REPLY =~ [Yy]$ ]]; then
     PACKAGES="$PACKAGES \
         sys-apps/pcsc-tools \
