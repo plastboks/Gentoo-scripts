@@ -1,0 +1,1 @@
+USE="bindist mmx sse sse2 libkms xa X xkb gtk xcb xft ~amd64"
