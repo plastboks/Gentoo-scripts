@@ -32,7 +32,9 @@ printf "\n"
 read -p "Install i3 and friends [y/N]" -n 1 -r
 if [[ $REPLY =~ [Yy]$ ]]; then
     PACKAGES="$PACKAGES \
-        i3 \
+        x11-wm/i3 \
+        x11-misc/i3status \
+        x11-misc/i3lock \
         x11-terms/rxvt-unicode \
         x11-misc/urxvt-perls \
         x11-misc/urxvt-font-size \
