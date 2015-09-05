@@ -56,6 +56,7 @@ printf "\n"
 read -p "Install editors [y/N]  " -n 1 -r
 if [[ $REPLY =~ [Yy]$ ]]; then
     PACKAGES="$PACKAGES \
+        app-vim/gnupg \
         app-editors/vim"
 fi
 
@@ -78,14 +79,25 @@ fi
 # Misc network tools #
 ######################
 printf "\n" #
-read -p "Install ssh, encryption and sync utils [y/N] " -n 1 -r
+read -p "Install ssh and sync utils [y/N] " -n 1 -r
 if [[ $REPLY =~ [Yy]$ ]]; then
     PACKAGES="$PACKAGES \
         sys-fs/sshfs-fuse \
         net-misc/rsync \
+        sys-libs/zlib"
+fi
+
+#########
+# Crypt #
+#########
+printf "\n" #
+read -p "Install crypt and privacy utils [y/N] " -n 1 -r
+if [[ $REPLY =~ [Yy]$ ]]; then
+    PACKAGES="$PACKAGES \
         sys-fs/encfs \
         dev-libs/openssl \
-        sys-libs/zlib"
+        app-admin/pass \
+        app-crypt/gnupg"
 fi
 
 ###########
@@ -107,7 +119,9 @@ if [[ $REPLY =~ [Yy]$ ]]; then
         net-fs/nfs-utils \
         net-misc/socat \
         sys-apps/findutils \
+        sys-apps/lm_sensors \
         app-arch/unrar \
+        app-portage/eix \
         app-arch/unzip"
 fi
 
