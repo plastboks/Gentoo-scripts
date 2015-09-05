@@ -5,9 +5,7 @@
 # The script should be considered as a reference only.
 # 
 
-
 PACKAGES=""
-
 
 #############
 # X related #
@@ -45,6 +43,9 @@ if [[ $REPLY =~ [Yy]$ ]]; then
         x11-misc/autocutsel \
         x11-themes/gnome-themes-standard \
         x11-themes/gtk-engines \
+        x11-misc/dunst \
+        x11-misc/redshift \
+        x11-misc/xcompmgr \
         media-gfx/feh \
         x11-misc/dmenu"
 fi
@@ -73,6 +74,18 @@ if [[ $REPLY =~ [Yy]$ ]]; then
         media-fonts/terminus-font \
         x11-themes/faenza-icon-theme \
         media-fonts/liberation-fonts"
+fi
+
+############
+# Browsers #
+############
+printf "\n"
+read -p "Install browsers [y/N] " -n 1 -r
+if [[ $REPLY =~ [Yy]$ ]]; then
+    PACKAGES="$PACKAGES \
+        www-client/dwb \
+        www-client/links \
+        www-client/firefox"
 fi
 
 ######################
@@ -115,7 +128,6 @@ if [[ $REPLY =~ [Yy]$ ]]; then
         sys-process/htop \
         app-misc/tmux \
         app-misc/screen \
-        www-client/links \
         net-fs/nfs-utils \
         net-misc/socat \
         sys-apps/findutils \
@@ -136,6 +148,6 @@ if [[ $REPLY =~ [Yy]$ ]]; then
         app-crypt/ccid"
 fi
 
+print "\n"
 sudo emerge $PACKAGES
-
 exit
