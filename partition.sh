@@ -2,7 +2,7 @@
 
 # A simple Gentoo partition script.
 
-FS="ext4"
+FS="btrfs"
 DEVICE=$1
 BOOT_PART="/dev/disk/by-partlabel/boot"
 SWAP_PART="/dev/disk/by-partlabel/swap"
@@ -11,8 +11,8 @@ CRYPT_NAME="crypt"
 
 sgdisk $DEVICE --attributes=1:set:2 # GPT
 sgdisk -o \
-    -n 1:0:+32M -t l:ef02 -c 1:bios \
-    -n 2:0:+512M -c 2:boot \
+    -n 1:0:+2M -t l:ef02 -c 1:bios \
+    -n 2:0:+128M -c 2:boot \
     -n 3:0:+2048M -c 3:swap -t l:swap \
     -N=4 -c 4:gentdsk \
     -p $DEVICE
