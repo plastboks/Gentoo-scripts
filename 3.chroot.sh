@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source /etc/profile
-
 emerge-webrsync
 emerge --sync
 
@@ -15,6 +13,8 @@ emerge vim \
         sys-kernel/gentoo-sources \
         sys-kernel/linux-firmware \
         sys-boot/grub
+
+eselect profile set 2
 
 rc-update add syslog-ng default
 rc-update add cronie default
