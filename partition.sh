@@ -6,7 +6,8 @@ FS="ext4"
 BOOT_PART="/dev/disk/by-partlabel/boot"
 SWAP_PART="/dev/disk/by-partlabel/swap"
 LVM_PART="/dev/disk/by-partlabel/gentoodisk"
-HOOKS=""
+LVM_ROOT="/dev/mapper/gentoo-root"
+LVM_HOME="/dev/mapper/gentoo-home"
 
 while test $# -gt 0; do
   OPTION=$1
@@ -44,7 +45,9 @@ EOF
   exit
 fi
 
-
+umount /mnt/gentoo/boot
+umount /mnt/gentoo/home
+umount /mnt/gentoo
 vgremove -f gentoo
 
 # -- Partitioning
@@ -62,7 +65,6 @@ sleep 2
 # -- LUKS
 
 if [ "x$USE_LUKS" != "x" ]; then
-  HOOKS="$HOOKS encrypt"
   LUKS_PART=$LVM_PART
   LVM_PART="/dev/mapper/crypt"
 
@@ -79,10 +81,6 @@ if [ "x$USE_LUKS" != "x" ]; then
 fi
 
 # -- LVM
-
-HOOKS="$HOOKS lvm2"
-LVM_ROOT="/dev/mapper/gentoo-root"
-LVM_HOME="/dev/mapper/gentoo-home"
 
 pvcreate $LVM_PART
 vgcreate gentoo $LVM_PART
