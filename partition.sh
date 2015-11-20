@@ -89,10 +89,17 @@ lvcreate --name home --extents 100%FREE gentoo
 
 # -- Filesystems
 
-mkfs.ext2 $BOOT_PART
-mkfs.$FS $LVM_PART
-mkfs.$FS $LVM_PART
+printf "=> Making swap part: \n" $SWAP_PART
 mkswap $SWAP_PART
+
+printf "=> Making boot part: \n" $BOOT_PART
+mkfs.ext2 $BOOT_PART
+
+printf "=> Making root part: \n" $LVM_ROOT
+mkfs.$FS $LVM_ROOT
+
+printf "=> Making home part: \n" $LVM_HOME
+mkfs.$FS $LVM_HOME
 
 # -- Mount
 
