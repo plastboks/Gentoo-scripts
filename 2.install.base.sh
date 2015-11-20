@@ -18,6 +18,6 @@ mount -t tmpfs -o nosuid,nodev,noexec shm /dev/shm
 chmod 1777 /dev/shm
 
 printf "=> Chrooting into gentoo \n"
+echo "source /etc/profile" > /mnt/gentoo/root/.bashrc
+echo "export PS1='(chroot) $PS1'" >> /mnt/gentoo/root/.bashrc
 chroot /mnt/gentoo /bin/bash
-source /etc/profile
-export PS1="(chroot) $PS1"
