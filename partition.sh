@@ -90,8 +90,8 @@ lvcreate --name home --extents 100%FREE gentoo
 # -- Filesystems
 
 mkfs.ext2 $BOOT_PART
-mkfs.$FS $ROOT_PART
-mkfs.$FS $HOME_PART
+mkfs.$FS $LVM_PART
+mkfs.$FS $LVM_PART
 mkswap $SWAP_PART
 
 # -- Mount
