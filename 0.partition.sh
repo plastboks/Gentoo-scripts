@@ -4,8 +4,8 @@
 
 FS="ext4"
 BOOT_PART="/dev/disk/by-partlabel/boot"
-SWAP_PART="/dev/disk/by-partlabel/swap"
 LVM_PART="/dev/disk/by-partlabel/gentoodisk"
+LVM_SWAP="/dev/mapper/gentoo-swap"
 LVM_ROOT="/dev/mapper/gentoo-root"
 LVM_HOME="/dev/mapper/gentoo-home"
 
@@ -56,8 +56,7 @@ sgdisk $DEVICE --attributes=1:set:2 # GPT
 sgdisk -o \
     -n 1:0:+2M -t l:ef02 -c 1:bios \
     -n 2:0:+128M -c 2:boot \
-    -n 3:0:+2048M -c 3:swap -t l:swap \
-    -N=4 -c 4:gentoodisk \
+    -N=3 -c 3:gentoodisk \
     -p $DEVICE
 
 sleep 2
@@ -84,13 +83,14 @@ fi
 
 pvcreate $LVM_PART
 vgcreate gentoo $LVM_PART
-lvcreate --name root --extents 20%FREE gentoo
+lvcreate --name swap --size 2048M gentoo
+lvcreate --name root --extents 35%FREE gentoo
 lvcreate --name home --extents 100%FREE gentoo
 
 # -- Filesystems
 
-printf "=> Making swap part: \n" $SWAP_PART
-mkswap $SWAP_PART
+printf "=> Making swap part: \n" $LVM_SWAP
+mkswap $LVM_SWAP
 
 printf "=> Making boot part: \n" $BOOT_PART
 mkfs.ext2 $BOOT_PART
@@ -103,7 +103,7 @@ mkfs.$FS $LVM_HOME
 
 # -- Mount
 
-swapon $SWAP_PART
+swapon $LVM_SWAP
 mount $LVM_ROOT /mnt/gentoo
 mkdir /mnt/gentoo/boot
 mount $BOOT_PART /mnt/gentoo/boot
