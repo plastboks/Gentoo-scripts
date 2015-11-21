@@ -1,15 +1,16 @@
 #!/bin/bash
 
+HOSTNAME="gentoo"
+USELINE='USE="bindist mmx sse sse2 libkms crypt xa X xkb gtk xcb xft dir sqlite apng acl nls"'
+
 # - Sync emerge
 
 emerge-webrsync
 emerge --sync
-emerge vim
 
 # - Edit use flags
 
-echo '#USE="bindist mmx sse sse2 libkms xa X xkb gtk xcb xft dir sqlite apng crypt"' >> /etc/portage/make.conf
-vi /etc/portage/make.conf
+sed -i.bak "/^USE/c$USELINE" /etc/portage/make.conf
 
 # - Set profile
 
@@ -17,13 +18,18 @@ eselect profile set 2
 
 # - Install some software
 
-emerge sys-fs/cryptsetup\
+emerge --ask \
+       app-editors/vim \
+       sys-fs/cryptsetup\
        app-admin/syslog-ng \
+       app-admin/sudo \
        sys-process/cronie \
        net-misc/netifrc \
        sys-apps/mlocate \
        net-misc/dhcpcd \
        sys-kernel/linux-firmware \
+       sys-kernel/genkernel \
+       sys-fs/lvm2 \
        sys-boot/grub \
        sys-apps/pciutils \
        app-portage/eix
@@ -34,14 +40,17 @@ eix-update
 rc-update add syslog-ng default
 rc-update add cronie default
 rc-update add sshd default
+rc-update add lvm boot
 
 # - Set timezone and locale
 
 echo "Europe/Oslo" > /etc/timezone
 emerge --config sys-libs/timezone-data
 
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
-eselect locale set 5
+eselect locale set 243
+echo 'LC_COLLATE="C"' >> /etc/env.d/02locale
 
 env-update && source /etc/profile
 
@@ -58,5 +67,44 @@ make install
 mkdir -p /boot/efi/boot
 cp /boot/vmlinuz-* /boot/efi/boot/bootx64.efi
 
-emerge --ask genkernel
 genkernel --lvm --luks --mdadm --install initramfs
+
+# - Modifying fstab
+
+sed -i '/fd0/d' /etc/fstab
+sed -i 's/SWAP/disk\/by-partlabel\/swap/g' /etc/fstab
+sed -i 's/BOOT/disk\/by-partlabel\/boot/g' /etc/fstab
+sed -i 's/ROOT/mapper\/gentoo-root/g' /etc/fstab
+echo "$LVM_HOME   /home            ext4    noatime              0 2" >> /etc/fstab
+
+# - Hostname
+
+echo "hostname=$HOSTNAME" > /etc/hostname
+
+# - Network
+
+INTERFACE=`ip addr | grep "2: " | awk '$0=$2' | sed 's/://g'`
+echo "config_$INTERFACE="dhcp"" > /etc/conf.d/net
+cd /etc/init.d
+ln -s net.lo net.$INTERFACE
+rc-update add net.$INTERFACE default
+
+
+# - Hostname
+
+sed -i.bak "/127.0.0.1/c\127.0.0.1    $HOSTNAME localhost" /etc/hosts
+
+# - Add user
+
+read -p "=> Enter username: " -r
+useradd -m -g users -G wheel -s /bin/bash $REPLY
+passwd $REPLY
+/mnt passwd -l root
+echo "%wheel ALL=(ALL) ALL" > /mnt/etc/sudoers.d/wheel
+
+
+# - Bootloader
+
+echo GRUB_CMDLINE_LINUX="dolvm" >> /etc/default/grub
+grub2-install /dev/sda
+grub2-mkconfig -o /boot/grub/grub.cfg

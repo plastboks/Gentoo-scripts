@@ -4,6 +4,10 @@ Gentoo Scripts
 This is just a small repository for me to keep the installation process of Gentoo Linux as quick as possible.
 There is nothing here meant to be taken seriously.
 
+Download
+========
+`wget -O - https://raw.githubusercontent.com/plastboks/Gentoo-scripts/master/fetch.sh | bash`
+
 Links
 =====
 * [0.partition.sh](0.partition.sh) - [Web resource](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks)
