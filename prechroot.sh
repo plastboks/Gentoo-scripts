@@ -127,6 +127,7 @@ mount $LVM_HOME /mnt/gentoo/home
 cd /mnt/gentoo
 wget $SERVER/$LATEST
 tar xvjpf stage3-*.tar.bz2 --xattrs
+rm stage3-*.tar.bz2
 
 
 # - Setup mirrors
@@ -161,11 +162,13 @@ source ~/.exports
 export PS1="[(chroot)]# "
 DELIM
 
+cd ~
+
 if [ -f chroot.sh ]; then
     cp chroot.sh /mnt/gentoo/root/
 fi
 if [ -f .config ]; then
-    cp .config /mnt/gentoo/root
+    cp .config /mnt/gentoo/root/
 fi
 
 

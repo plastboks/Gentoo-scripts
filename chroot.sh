@@ -75,6 +75,8 @@ source /root/.bashrc
 echo sys-kernel/gentoo-sources >> /etc/portage/package.keywords
 emerge --ask sys-kernel/gentoo-sources
 
+cd ~
+
 if [ -f .config ]; then
     cp .config /usr/src/linux/
 fi
