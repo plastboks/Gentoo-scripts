@@ -65,8 +65,9 @@ locale-gen
 eselect locale set 243
 echo 'LC_COLLATE="C"' >> /etc/env.d/02locale
 
-env-update && source /etc/profile
-export PS1="[(chroot)]# "
+env-update
+source /root/.exports
+source /root/.bashrc
 
 
 # - Install kernel
@@ -97,7 +98,10 @@ genkernel --lvm --luks --mdadm --install initramfs
 sed -i.bak '/fd0/d' /etc/fstab
 sed -i '/cdrom/d' /etc/fstab
 
-FS="ext4"
+if [[ -z "$FS" ]]; then
+    FS="ext4"
+fi
+
 BOOT_LINE="/dev/disk/by-partlabel/boot /boot ext2 noauto,noatime 1 2"
 ROOT_LINE="/dev/mapper/gentoo-root / $FS noatime 0 1"
 SWAP_LINE="/dev/mapper/gentoo-swap none swap sw 0 0"
@@ -138,4 +142,11 @@ echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
 
 echo GRUB_CMDLINE_LINUX="dolvm" >> /etc/default/grub
 grub2-install $GRUBDISK
+
+if [[ $USE_LUKS -eq 1 ]]; then
+  perl -pi -e 's/^(GRUB_CMDLINE_LINUX|GRUB_DISABLE_LINUX_UUID)/#$1/' /etc/default/grub
+  echo GRUB_CMDLINE_LINUX=\"cryptdevice=$LUKS_PART:crypt:allow-discards\" >> /etc/default/grub
+  echo GRUB_DISABLE_LINUX_UUID=true >> /etc/default/grub
+fi
+
 grub2-mkconfig -o /boot/grub/grub.cfg

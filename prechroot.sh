@@ -13,6 +13,8 @@ BUILD="latest-stage3-amd64.txt"
 SERVER="http://trumpetti.atm.tut.fi/gentoo/releases/amd64/autobuilds"
 LATEST=`curl -s $SERVER/$BUILD | tail -n 1 | awk '$0=$1'`
 
+USE_LUKS=0
+
 while test $# -gt 0; do
   OPTION=$1
   shift
@@ -69,7 +71,7 @@ sleep 2
 
 # -- LUKS
 
-if [ "x$USE_LUKS" != "x" ]; then
+if [[ $USE_LUKS -eq 1 ]]; then
   LUKS_PART=$LVM_PART
   LVM_PART="/dev/mapper/crypt"
 
@@ -147,8 +149,18 @@ chmod 1777 /dev/shm
 
 # - Copying some files over to chroot env.
 
-echo "source /etc/profile" > /mnt/gentoo/root/.bashrc
-echo "export PS1='[(chroot)]# '" >> /mnt/gentoo/root/.bashrc
+cat > /mnt/gentoo/root/.exports <<DELIM
+FS=$FS
+USE_LUKS=$USE_LUKS
+LUKS_PART=$LUKS_PART
+DELIM
+
+cat > /mnt/gentoo/root/.bashrc <<DELIM
+source /etc/profile
+source ~/.exports
+export PS1="[(chroot)]# "
+DELIM
+
 if [ -f chroot.sh ]; then
     cp chroot.sh /mnt/gentoo/root/
 fi
