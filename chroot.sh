@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USELINE='USE="bindist mmx sse sse2 libkms crypt xa X xkb gtk xcb xft dir sqlite apng acl nls"'
+USELINE='USE="bindist mmx sse sse2 libkms crypt xa X xkb gtk xcb xft dir sqlite apng acl nls udev branding bash-completion smartcard syslog"'
 
 # - Get some data before the display goes to sleep.
 
@@ -42,6 +42,7 @@ emerge --ask \
        sys-boot/grub \
        sys-apps/pciutils \
        dev-vcs/git \
+       net-misc/ntp \
        app-portage/eix
 
 eix-update
@@ -53,6 +54,7 @@ rc-update add syslog-ng default
 rc-update add cronie default
 rc-update add sshd default
 rc-update add lvm boot
+rc-update add ntp-client default
 
 
 # - Set timezone and locale
@@ -83,7 +85,7 @@ fi
 
 cd /usr/src/linux
 make menuconfig
-make && make modules_install
+make -j3 && make modules_install
 make install
 
 
@@ -119,7 +121,8 @@ perl -pi -e 's/(issue_discards) = 0/$1 = 1/' /etc/lvm/lvm.conf
 
 # - Hostname
 
-echo "$HOSTNAME" > /etc/hostname
+echo "HOSTNAME=$HOSTNAME" > /etc/conf.d/hostname
+rc-update add hostname default
 sed -i.bak "/127.0.0.1/c\127.0.0.1    $HOSTNAME localhost" /etc/hosts
 
 
