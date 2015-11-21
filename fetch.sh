@@ -10,5 +10,6 @@ LIST=(
 )
 
 for elem in "${LIST[@]}"; do
-    wget $PATH/$elem
+    /usr/bin/wget $PATH/$elem
+    /bin/chmod +x $elem
 done
