@@ -2,6 +2,12 @@
 
 USELINE='USE="bindist mmx sse sse2 libkms crypt xa X xkb gtk xcb xft dir sqlite apng acl nls"'
 
+# - Get some data before the display goes to sleep.
+
+read -p "=> Enter hostname: " -r HOSTNAME
+read -p "=> Enter username: " -r USER
+read -p "=> Enter grub install disk (/dev/sda?): " -r GRUBDISK
+
 
 # - Sync emerge
 
@@ -66,6 +72,11 @@ export PS1="[(chroot)]# "
 
 echo sys-kernel/gentoo-sources >> /etc/portage/package.keywords
 emerge --ask sys-kernel/gentoo-sources
+
+if [ -f .config ]; then
+    cp .config /usr/src/linux/
+fi
+
 cd /usr/src/linux
 make menuconfig
 make && make modules_install
@@ -101,8 +112,6 @@ perl -pi -e 's/(issue_discards) = 0/$1 = 1/' /etc/lvm/lvm.conf
 
 # - Hostname
 
-read -p "=> Enter hostname: " -r
-HOSTNAME=$REPLY
 echo "$HOSTNAME" > /etc/hostname
 sed -i.bak "/127.0.0.1/c\127.0.0.1    $HOSTNAME localhost" /etc/hosts
 
@@ -118,7 +127,6 @@ rc-update add net.$INTERFACE default
 
 # - Add user
 
-read -p "=> Enter username: " -r
 useradd -m -g users -G wheel -s /bin/bash $REPLY
 passwd $REPLY
 passwd -l root
@@ -128,7 +136,5 @@ echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
 # - Bootloader
 
 echo GRUB_CMDLINE_LINUX="dolvm" >> /etc/default/grub
-read -p "=> Enter grub install disk: " -r
-GRUBDISK=$REPLY
 grub2-install $GRUBDISK
 grub2-mkconfig -o /boot/grub/grub.cfg

@@ -10,7 +10,16 @@ Download
 
 Links
 =====
-* [0.partition.sh](0.partition.sh) - [Web resource](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks)
-* [1.stage3.sh](1.stage3.sh) - [Web resource](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage)
-* [2.install.base.sh](2.install.base.sh) - [Web resource](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base)
-* [3.chroot.sh](3.chroot.sh) - [Web resource](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel)
+* [prechroot.sh](prechroot) - Partitioning and downloading stage3
+* [chroot.sh](chroot.sh) - Install kernel, basic programs, bootloader, and user (etc...)
+
+Resources
+* [LVM](https://wiki.gentoo.org/wiki/LVM#Kernel)
+* [Disks](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks)
+* [Stage3](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage)
+* [Base](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base)
+* [Kernel](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel)
+* [System](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System)
+* [Tools](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Tools)
+* [Bootloader](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Bootloader)
+
