@@ -41,6 +41,7 @@ emerge --ask \
        sys-fs/lvm2 \
        sys-boot/grub \
        sys-apps/pciutils \
+       dev-vcs/git \
        app-portage/eix
 
 eix-update
