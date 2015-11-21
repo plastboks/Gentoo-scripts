@@ -20,5 +20,7 @@ chmod 1777 /dev/shm
 printf "=> Chrooting into gentoo \n"
 echo "source /etc/profile" > /mnt/gentoo/root/.bashrc
 echo "export PS1='[(chroot)]# '" >> /mnt/gentoo/root/.bashrc
-if [ -f 3.chroot.sh ]; then cp 3.chroot.sh /mnt/gentoo/root/ fi
+if [ -f 3.chroot.sh ]; then
+    cp 3.chroot.sh /mnt/gentoo/root/
+fi
 chroot /mnt/gentoo /bin/bash

@@ -82,13 +82,19 @@ genkernel --lvm --luks --mdadm --install initramfs
 
 # - Modifying fstab
 
-sed -i '/fd0/d' /etc/fstab
+sed -i.bak '/fd0/d' /etc/fstab
 sed -i '/cdrom/d' /etc/fstab
 
-sed -i 's/BOOT/disk\/by-partlabel\/boot/g' /etc/fstab
-sed -i 's/SWAP/mapper\/gentoo-swap/g' /etc/fstab
-sed -i 's/ROOT/mapper\/gentoo-root/g' /etc/fstab
-echo "$LVM_HOME   /home            ext4    noatime              0 2" >> /etc/fstab
+FS="ext4"
+BOOT_LINE="/dev/disk/by-partlabel/boot /boot ext2 noauto,noatime 1 2"
+ROOT_LINE="/dev/mapper/gentoo-root / $FS noatime 0 1"
+SWAP_LINE="/dev/mapper/gentoo-swap none swap sw 0 0"
+HOME_LINE="/dev/mapper/gentoo-home /home $FS noatime 0 2"
+
+sed -i "/\/dev\/BOOT/c$BOOT_LINE" /etc/fstab
+sed -i "/\/dev\/ROOT/c$ROOT_LINE" /etc/fstab
+sed -i "/\/dev\/SWAP/c$SWAP_LINE" /etc/fstab
+echo $HOME_LINE >> /etc/fstab
 
 perl -pi -e 's/(issue_discards) = 0/$1 = 1/' /etc/lvm/lvm.conf
 
