@@ -1,6 +1,7 @@
 #!/bin/bash
 
-USELINE='USE="bindist mmx sse sse2 libkms crypt xa X xkb gtk xcb xft dir sqlite apng acl nls udev branding bash-completion smartcard syslog btrfs lvm ext4 usb gpg racket"'
+#USELINE='USE="bindist mmx sse sse2 libkms crypt dynamic xa X xkb gtk xcb xft dir sqlite apng acl nls udev branding bash-completion smartcard syslog btrfs lvm ext4 usb gpg racket"'
+USELINE='USE="bindist mmx sse sse2 libkms crypt dynamic udev branding bash-completion syslog btrfs lvm ext4 usb gpg racket"'
 
 # - Get some data before the display goes to sleep.
 
@@ -45,6 +46,8 @@ emerge --ask \
        sys-boot/grub \
        sys-apps/pciutils \
        dev-vcs/git \
+       sys-fs/btrfs-progs \
+       sys-apps/util-linux \
        net-misc/ntp \
        app-portage/eix
 
@@ -153,7 +156,7 @@ grub2-install $DEVICE
 
 if [[ $USE_LUKS -eq 1 ]]; then
   perl -pi -e 's/^(GRUB_CMDLINE_LINUX|GRUB_DISABLE_LINUX_UUID)/#$1/' /etc/default/grub
-  echo GRUB_CMDLINE_LINUX=\"cryptdevice=$LUKS_PART:crypt:allow-discards\" >> /etc/default/grub
+  echo GRUB_CMDLINE_LINUX=\"crypt_root=$LUKS_PART\" >> /etc/default/grub
   echo GRUB_DISABLE_LINUX_UUID=true >> /etc/default/grub
 fi
 
