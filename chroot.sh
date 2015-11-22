@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USELINE='USE="bindist mmx sse sse2 libkms crypt xa X xkb gtk xcb xft dir sqlite apng acl nls udev branding bash-completion smartcard syslog"'
+USELINE='USE="bindist mmx sse sse2 libkms crypt xa X xkb gtk xcb xft dir sqlite apng acl nls udev branding bash-completion smartcard syslog btrfs lvm ext4 usb gpg racket"'
 
 # - Get some data before the display goes to sleep.
 
