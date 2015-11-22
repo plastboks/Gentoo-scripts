@@ -153,11 +153,14 @@ chmod 1777 /dev/shm
 
 # - Copying some files over to chroot env.
 
+ROOT_UUID=`udevadm info --query=all --name=$DEVICE"3" | grep ID_FS_UUID | sed 's//E: ID_FS_UUID/g'`
+
 cat > /mnt/gentoo/root/.exports <<DELIM
 FS=$FS
 USE_LUKS=$USE_LUKS
 LUKS_PART=$LUKS_PART
 DEVICE=$DEVICE
+ROOT_UUID=$ROOT_UUID
 DELIM
 
 cat > /mnt/gentoo/root/.bashrc <<DELIM

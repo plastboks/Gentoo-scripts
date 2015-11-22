@@ -156,7 +156,7 @@ grub2-install $DEVICE
 
 if [[ $USE_LUKS -eq 1 ]]; then
   perl -pi -e 's/^(GRUB_CMDLINE_LINUX|GRUB_DISABLE_LINUX_UUID)/#$1/' /etc/default/grub
-  echo GRUB_CMDLINE_LINUX=\"crypt_root=$LUKS_PART\" >> /etc/default/grub
+  echo GRUB_CMDLINE_LINUX=\"crypt_root=UUID=$ROOT_UUID\" >> /etc/default/grub
   echo GRUB_DISABLE_LINUX_UUID=true >> /etc/default/grub
 fi
 
