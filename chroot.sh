@@ -3,14 +3,11 @@
 #USELINE='USE="bindist mmx sse sse2 libkms crypt dynamic xa X xkb gtk xcb xft dir sqlite apng acl nls udev branding bash-completion smartcard syslog btrfs lvm ext4 usb gpg racket"'
 USELINE='USE="bindist mmx sse sse2 libkms crypt dynamic udev branding bash-completion syslog btrfs lvm ext4 usb gpg racket"'
 
+
 # - Get some data before the display goes to sleep.
 
 read -p "=> Enter hostname: " -r HOSTNAME
 read -p "=> Enter username: " -r USER
-
-if [[ -z "$DEVICE" ]]; then
-    read -p "=> Enter grub install disk (/dev/sda?): " -r DEVICE
-fi
 
 
 # - Sync emerge

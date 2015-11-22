@@ -10,7 +10,7 @@ Download
 
 Links
 =====
-* [prechroot.sh](prechroot) - Partitioning and downloading stage3
+* [prechroot.sh](prechroot.sh) - Partitioning and downloading stage3
 * [chroot.sh](chroot.sh) - Install kernel, basic programs, bootloader, and user (etc...)
 
 Resources
