@@ -107,6 +107,7 @@ genkernel --lvm --luks --mdadm --install initramfs
 
 sed -i.bak '/fd0/d' /etc/fstab
 sed -i '/cdrom/d' /etc/fstab
+sed -i '/BOOT/d' /etc/fstab
 
 if [[ -z "$FS" ]]; then
     FS="ext4"
@@ -117,7 +118,7 @@ ROOT_LINE="/dev/mapper/gentoo-root / $FS noatime 0 1"
 SWAP_LINE="/dev/mapper/gentoo-swap none swap sw 0 0"
 HOME_LINE="/dev/mapper/gentoo-home /home $FS noatime 0 2"
 
-sed -i "/\/dev\/BOOT/c$BOOT_LINE" /etc/fstab
+echo $BOOT_LINE >> /etc/fstab
 sed -i "/\/dev\/ROOT/c$ROOT_LINE" /etc/fstab
 sed -i "/\/dev\/SWAP/c$SWAP_LINE" /etc/fstab
 echo $HOME_LINE >> /etc/fstab
