@@ -112,7 +112,7 @@ if [[ -z "$FS" ]]; then
     FS="ext4"
 fi
 
-BOOT_LINE="/dev/disk/by-partlabel/boot /boot ext2 noauto,noatime 1 2"
+BOOT_LINE="UUID=$BOOT_UUID /boot ext2 noauto,noatime 1 2"
 ROOT_LINE="/dev/mapper/gentoo-root / $FS noatime 0 1"
 SWAP_LINE="/dev/mapper/gentoo-swap none swap sw 0 0"
 HOME_LINE="/dev/mapper/gentoo-home /home $FS noatime 0 2"
