@@ -137,8 +137,8 @@ rc-update add net.$INTERFACE default
 
 # - Add user
 
-useradd -m -g users -G wheel -s /bin/bash $REPLY
-passwd $REPLY
+useradd -m -g users -G wheel -s /bin/bash $USER
+passwd $USER
 passwd -l root
 echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
 
