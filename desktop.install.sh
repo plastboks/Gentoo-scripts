@@ -149,6 +149,6 @@ if [[ $REPLY =~ [Yy]$ ]]; then
 fi
 
 printf "\n"
-sudo emerge –update –newuse –deep world
+sudo emerge --update --newuse --deep world
 sudo emerge --ask $PACKAGES
 exit

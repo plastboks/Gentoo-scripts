@@ -132,8 +132,8 @@ rm stage3-*.tar.bz2
 
 # - Setup mirrors
 
-mkdir /mnt/etc/portage/repos.conf
-cp /mnt/usr/share/portage/config/repos.conf /mnt/etc/portage/repos.conf/gentoo.conf
+mkdir /mnt/gentoo/etc/portage/repos.conf
+cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
 
 #mirrorselect -i -o >> /mnt/gentoo/etc/portage/make.conf
 #mirrorselect -i -r -o >> /mnt/gentoo/etc/portage/make.conf
@@ -157,6 +157,7 @@ cat > /mnt/gentoo/root/.exports <<DELIM
 FS=$FS
 USE_LUKS=$USE_LUKS
 LUKS_PART=$LUKS_PART
+DEVICE=$DEVICE
 DELIM
 
 cat > /mnt/gentoo/root/.bashrc <<DELIM

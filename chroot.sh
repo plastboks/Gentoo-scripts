@@ -6,7 +6,10 @@ USELINE='USE="bindist mmx sse sse2 libkms crypt xa X xkb gtk xcb xft dir sqlite 
 
 read -p "=> Enter hostname: " -r HOSTNAME
 read -p "=> Enter username: " -r USER
-read -p "=> Enter grub install disk (/dev/sda?): " -r GRUBDISK
+
+if [[ -z "$DEVICE" ]]; then
+    read -p "=> Enter grub install disk (/dev/sda?): " -r DEVICE
+fi
 
 
 # - Sync emerge
@@ -146,7 +149,7 @@ echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
 # - Bootloader
 
 echo GRUB_CMDLINE_LINUX="dolvm" >> /etc/default/grub
-grub2-install $GRUBDISK
+grub2-install $DEVICE
 
 if [[ $USE_LUKS -eq 1 ]]; then
   perl -pi -e 's/^(GRUB_CMDLINE_LINUX|GRUB_DISABLE_LINUX_UUID)/#$1/' /etc/default/grub
