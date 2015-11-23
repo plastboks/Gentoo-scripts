@@ -132,11 +132,11 @@ rm stage3-*.tar.bz2
 
 # - Setup mirrors
 
-mkdir /mnt/gentoo/etc/portage/repos.conf
-cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
+#mkdir /mnt/gentoo/etc/portage/repos.conf
+#cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
 
-#mirrorselect -i -o >> /mnt/gentoo/etc/portage/make.conf
-#mirrorselect -i -r -o >> /mnt/gentoo/etc/portage/make.conf
+mirrorselect -i -o >> /mnt/gentoo/etc/portage/make.conf
+mirrorselect -i -r -o >> /mnt/gentoo/etc/portage/make.conf
 
 cp -L /etc/resolv.conf /mnt/gentoo/etc/
 
