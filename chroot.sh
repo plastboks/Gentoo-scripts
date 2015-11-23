@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#USELINE='USE="bindist mmx sse sse2 libkms crypt dynamic xa X xkb gtk xcb xft dir sqlite apng acl nls udev branding bash-completion smartcard syslog btrfs lvm ext4 usb gpg racket"'
-USELINE='USE="bindist mmx sse sse2 libkms crypt dynamic udev branding bash-completion syslog btrfs lvm ext4 usb gpg racket"'
+#USELINE='USE="bindist mmx sse sse2 libkms crypt dynamic xa X xkb gtk xcb xft dir sqlite apng acl nls udev branding bash-completion smartcard syslog btrfs lvm ext4 usb gpg "'
+USELINE='USE="bindist mmx sse sse2 libkms crypt dynamic dir sqlite udev branding bash-completion syslog btrfs lvm ext4 usb gpg "'
 
 
 # - Get some data before the display goes to sleep.
@@ -28,7 +28,7 @@ eselect profile set 2
 
 # - Install some software
 
-emerge --ask \
+emerge \
        app-editors/vim \
        sys-fs/cryptsetup\
        app-admin/syslog-ng \
@@ -78,12 +78,10 @@ source /root/.bashrc
 # - Install kernel
 
 echo sys-kernel/gentoo-sources >> /etc/portage/package.keywords
-emerge --ask sys-kernel/gentoo-sources
+emerge sys-kernel/gentoo-sources
 
-cd ~
-
-if [ -f .config ]; then
-    cp .config /usr/src/linux/
+if [ -f /root/.config ]; then
+    cp /root/.config /usr/src/linux/
 fi
 
 cd /usr/src/linux
