@@ -22,4 +22,4 @@ Resources
 * [System](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System)
 * [Tools](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Tools)
 * [Bootloader](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Bootloader)
-
+* [CheatSheet](https://wiki.gentoo.org/wiki/Gentoo_Cheat_Sheet)
