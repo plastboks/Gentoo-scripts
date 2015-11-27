@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USELINE='USE="bindist mmx sse sse2 libkms crypt dynamic symlink dir sqlite acl nls udev branding bash-completion smartcard syslog btrfs lvm ext4 usb gpg "'
+USELINE='USE="bindist mmx sse sse2 libkms crypt dynamic symlink dir sqlite acl nls branding bash-completion smartcard syslog btrfs lvm ext4 usb gpg "'
 XUSE=" xa X xkb gtk xcb xft apng"
 
 
