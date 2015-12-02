@@ -157,3 +157,9 @@ if [[ $USE_LUKS -eq 1 ]]; then
 fi
 
 grub2-mkconfig -o /boot/grub/grub.cfg
+
+
+# - Cleaning up some .bashrc lines
+
+sed -i.bak '/PS1/d' /root/.bashrc
+sed -i.bak '/exports/d' /root/.bashrc
