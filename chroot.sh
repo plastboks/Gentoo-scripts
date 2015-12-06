@@ -41,6 +41,7 @@ emerge \
        sys-kernel/genkernel \
        sys-fs/lvm2 \
        sys-boot/grub \
+       sys-boot/efibootmgr \
        sys-apps/pciutils \
        dev-vcs/git \
        sys-fs/btrfs-progs \
@@ -90,14 +91,6 @@ make -j3 && make modules_install
 make install
 
 
-# - Install boot loader
-
-mkdir -p /boot/efi/boot
-cp /boot/vmlinuz-* /boot/efi/boot/bootx64.efi
-
-genkernel --lvm --luks --mdadm --install initramfs
-
-
 # - Modifying fstab
 
 sed -i.bak '/fd0/d' /etc/fstab
@@ -145,7 +138,20 @@ passwd -l root
 echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
 
 
-# - Bootloader
+# - Bootloader Section
+
+# - Install boot loader
+
+mkdir -p /boot/efi/boot
+cp /boot/vmlinuz-* /boot/efi/boot/bootx64.efi
+
+genkernel --lvm --luks --mdadm --install initramfs
+
+INITRAMFS=$(basename `ls /boot/initramfs-*`)
+
+#efibootmgr -c -d $DEVICE -p 2 -L "Gentoo" \
+#    -l "\efi\boot\bootx64.efi" \
+#    initrd="\\$INITRAMFS"
 
 echo GRUB_CMDLINE_LINUX="dolvm" >> /etc/default/grub
 grub2-install $DEVICE
