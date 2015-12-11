@@ -103,7 +103,7 @@ printf "=> Making swap part: \n" $LVM_SWAP
 mkswap $LVM_SWAP
 
 printf "=> Making boot part: \n" $BOOT_PART
-mkfs.ext2 $BOOT_PART
+mkfs.vfat $BOOT_PART
 
 printf "=> Making root part: \n" $LVM_ROOT
 mkfs.$FS $LVM_ROOT

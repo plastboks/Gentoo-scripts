@@ -43,6 +43,7 @@ emerge \
        sys-boot/grub \
        sys-boot/efibootmgr \
        sys-apps/pciutils \
+       app-portage/layman \
        dev-vcs/git \
        sys-fs/btrfs-progs \
        sys-apps/util-linux \
