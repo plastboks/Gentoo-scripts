@@ -13,7 +13,18 @@ Links
 * [prechroot.sh](prechroot.sh) - Partitioning and downloading stage3
 * [chroot.sh](chroot.sh) - Install kernel, basic programs, bootloader, and user (etc...)
 
+
+Thinkpad X220
+=============
+Some special kernel parameters for the X220
+
+* Intel Gigabit Ethernet: (CONFIG_E1000E)
+* Intel WLAN: (CONFIG_IWLAGNI)
+* Intel HD Graphic: (CONFIG_DRM_I915I)
+* TPM Chip (CONFIG_TCG_TIS)
+
 Resources
+=========
 * [LVM](https://wiki.gentoo.org/wiki/LVM#Kernel)
 * [Disks](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks)
 * [Stage3](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage)

@@ -154,6 +154,13 @@ INITRAMFS=$(basename `ls /boot/initramfs-*`)
 #    -l "\efi\boot\bootx64.efi" \
 #    initrd="\\$INITRAMFS"
 
+#grub2-mkimage -d /usr/lib64/grub/x86_64-efi \
+#    -O x86_64-efi \
+#    -p "" \
+#    -o /boot/efi/efi/boot/bootx64.efi part_gpt btrfs fat ext2 normal \
+#        crypto lvm chain boot configfile linux multiboot efi_gop linux
+
+
 echo GRUB_CMDLINE_LINUX="dolvm" >> /etc/default/grub
 grub2-install $DEVICE
 
